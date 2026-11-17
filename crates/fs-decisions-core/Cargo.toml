@@ -1,0 +1,12 @@
+[package]
+name = "fs-decisions-core"
+description = "The counting rule of FreeSynergy Decisions' date poll (Yes, If needed, No counted apart; the suggested window): pure code, no storage, no window"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[lib]
+name = "fs_decisions_core"

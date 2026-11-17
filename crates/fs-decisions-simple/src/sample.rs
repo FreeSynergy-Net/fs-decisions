@@ -1,5 +1,5 @@
 //! The sample of the main view: the date poll grid and the list "my decisions" with every word resolved, made only from
-//! `preview.rs` and the rule of `grid.rs`.
+//! `preview.rs` and the rule of `fs-decisions-core`.
 //!
 //! Pattern: Builder: one function from the words to typed rows and columns; no element is built here except the suggestion card.
 
@@ -8,7 +8,7 @@ use fs_components_mf2::Mf2Texts;
 use fs_components_widgets::{Column, ColumnWidth, Row};
 use fs_components_words::{Args, Words};
 
-use crate::grid::{Answer, Tally, best, tally};
+use fs_decisions_core::{Answer, Tally, best, tally};
 use crate::main_view::paragraph;
 use crate::preview::{DECISIONS, PEOPLE, STARTS, State, WINDOWS};
 

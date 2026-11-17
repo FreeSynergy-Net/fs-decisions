@@ -1467,6 +1467,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "fs-decisions-core"
+version = "0.0.1"
+
+[[package]]
 name = "fs-decisions-server"
 version = "0.0.1"
 dependencies = [
@@ -1488,6 +1492,7 @@ dependencies = [
  "fs-components-widgets",
  "fs-components-words",
  "fs-decisions-client",
+ "fs-decisions-core",
  "fs-decisions-server",
  "tempfile",
 ]

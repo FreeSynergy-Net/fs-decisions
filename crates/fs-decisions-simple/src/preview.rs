@@ -3,7 +3,7 @@
 //! Pattern: Null object: stands in for the real data while the server offers nothing to read. The ids carry the prefix
 //! `preview:`; the names are words of the window ("Example A"), never real people (rule AUSSEHEN-SOFORT).
 
-use crate::grid::Answer;
+use fs_decisions_core::Answer;
 
 /// How many time windows the sample poll has.
 pub const WINDOWS: usize = 3;
