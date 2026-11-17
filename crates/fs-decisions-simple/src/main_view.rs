@@ -18,8 +18,10 @@ use crate::sample::Sample;
 pub const READ_ID: &str = "decision.read";
 
 /// The height of a row of the lists, in pixels, and of the heading above them.
-const ROW: f32 = 28.0;
+const ROW: f32 = 40.0;
 const HEAD: f32 = 28.0;
+/// The width of the left navigation.
+const NAV: f32 = 200.0;
 
 /// What the main view shows.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -50,7 +52,7 @@ fn plain(texts: &Mf2Texts, id: &str) -> String {
 
 fn heading(text: String) -> TextView {
     TextView::new(vec![Block::Heading {
-        level: 3,
+        level: 1,
         text: Inline::plain(text),
     }])
 }
@@ -64,6 +66,8 @@ pub(crate) fn paragraph(text: String) -> TextView {
 pub struct MainView {
     banner: (String, String),
     empty: (String, String),
+    /// The left navigation: a symbol and the word of each filter; the first is the active one.
+    nav: Vec<(Glyph, String)>,
     /// `None` in live mode: nothing of the sample survives a server that offers real data.
     sample: Option<Sample>,
 }
@@ -78,6 +82,11 @@ impl MainView {
                 plain(texts, "m-banner-text"),
             ),
             empty: (plain(texts, "m-empty-title"), plain(texts, "m-empty-text")),
+            nav: vec![
+                (Glyph::Calendar, plain(texts, "m-nav-polls")),
+                (Glyph::ViewList, plain(texts, "m-nav-open")),
+                (Glyph::Check, plain(texts, "m-nav-decided")),
+            ],
             sample: (mode(ids) == Mode::Preview).then(|| Sample::new(texts)),
         }
     }
@@ -98,47 +107,65 @@ impl MainView {
     #[must_use]
     pub fn suggestion(&self) -> Option<&str> {
         let sample = self.sample.as_ref()?;
-        sample.suggestion.as_ref().map(|s| s.0.as_str())
+        sample.suggestion.as_deref()
     }
 
-    /// The elements, for a window `width` pixels wide.
+    /// The elements, for a window `width` pixels wide: the navigation on the left, the main surface beside it.
     #[must_use]
     pub fn build(&self, width: f32) -> Div {
-        let inner = (width - 48.0).max(200.0);
-        let page = div().flex_col().gap(12.0).p(24.0);
-        let Some(sample) = &self.sample else {
+        let inner = (width - NAV - 96.0).max(200.0);
+        let page = div().flex_col().gap(24.0).p(32.0).w(width - NAV);
+        let body = match &self.sample {
+            Some(sample) => {
+                let (title, text) = &self.banner;
+                let banner = Alert::new(Severity::Info, text)
+                    .title(title)
+                    .id("dc-banner")
+                    .build();
+                page.child(banner)
+                    .child(heading(sample.poll_title.clone()).build())
+                    .child(list(
+                        "dc-grid",
+                        &sample.grid_columns,
+                        &sample.grid_rows,
+                        inner,
+                    ))
+                    .child(sample.suggestion_card())
+                    .child(paragraph(sample.rule.clone()).build())
+                    .child(paragraph(sample.zone.clone()).build())
+                    .child(heading(sample.list_title.clone()).build())
+                    .child(list(
+                        "dc-list",
+                        &sample.list_columns,
+                        &sample.list_rows,
+                        inner,
+                    ))
+            }
             // The server offers decisions, but this window cannot read them yet: say it plainly, never a sample.
-            return page.child(
+            None => page.child(
                 EmptyState::new(&self.empty.0)
                     .glyph(Glyph::Calendar)
                     .text(&self.empty.1)
                     .id("dc-empty")
                     .build(),
-            );
+            ),
         };
-        let (title, text) = &self.banner;
-        let banner = Alert::new(Severity::Info, text)
-            .title(title)
-            .id("dc-banner")
-            .build();
-        page.child(banner)
-            .child(heading(sample.poll_title.clone()).build())
-            .child(list(
-                "dc-grid",
-                &sample.grid_columns,
-                &sample.grid_rows,
-                inner,
-            ))
-            .child(sample.suggestion_card())
-            .child(paragraph(sample.rule.clone()).build())
-            .child(paragraph(sample.zone.clone()).build())
-            .child(heading(sample.list_title.clone()).build())
-            .child(list(
-                "dc-list",
-                &sample.list_columns,
-                &sample.list_rows,
-                inner,
-            ))
+        div().flex_row().child(self.navigation()).child(body)
+    }
+
+    fn navigation(&self) -> Div {
+        let mut nav = div().flex_col().gap(16.0).p(24.0).w(NAV);
+        for (glyph, word) in &self.nav {
+            nav = nav.child(
+                div()
+                    .flex_row()
+                    .items_center()
+                    .gap(12.0)
+                    .child(icon(*glyph, 20.0, Tone::Normal))
+                    .child(paragraph(word.clone()).build()),
+            );
+        }
+        nav
     }
 }
 

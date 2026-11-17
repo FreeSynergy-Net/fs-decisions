@@ -5,7 +5,7 @@
 
 use fs_components::blinc::layout::div::{Div, div};
 use fs_components_mf2::Mf2Texts;
-use fs_components_widgets::{Column, ColumnWidth, Row, badge_count};
+use fs_components_widgets::{Column, ColumnWidth, Row};
 use fs_components_words::{Args, Words};
 
 use crate::grid::{Answer, Tally, best, tally};
@@ -37,7 +37,7 @@ pub(crate) struct Sample {
     pub(crate) poll_title: String,
     pub(crate) grid_columns: Vec<Column>,
     pub(crate) grid_rows: Vec<Row>,
-    pub(crate) suggestion: Option<(String, u32, String)>,
+    pub(crate) suggestion: Option<String>,
     pub(crate) rule: String,
     pub(crate) zone: String,
     pub(crate) list_title: String,
@@ -97,12 +97,7 @@ impl Sample {
                     .text("yes", t.yes.to_string())
                     .text("if", t.if_needed.to_string()),
             );
-            let spoken = say(
-                texts,
-                "m-commitments-spoken",
-                &Args::new().text("count", t.commitments().to_string()),
-            );
-            (said, t.commitments(), spoken)
+            said
         });
         let list_rows = DECISIONS
             .iter()
@@ -143,17 +138,11 @@ impl Sample {
 }
 
 impl Sample {
-    /// The suggestion as a card; the number of commitments is a badge on its corner (the words for a screen reader are part of it).
+    /// The suggestion as a card (no badge: the preview mark stands once, at the top).
     pub(crate) fn suggestion_card(&self) -> Div {
-        let card = div().relative().class("fs-dc-card");
+        let card = div().class("fs-dc-card");
         match &self.suggestion {
-            Some((said, count, spoken)) => {
-                let card = card.child(paragraph(said.clone()).build());
-                match badge_count(*count, spoken) {
-                    Some(badge) => card.child(badge),
-                    None => card,
-                }
-            }
+            Some(said) => card.child(paragraph(said.clone()).build()),
             None => card,
         }
     }
