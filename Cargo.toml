@@ -1,0 +1,17 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/fs-decisions-server",
+    "crates/fs-decisions-client",
+    "crates/fs-decisions-simple",
+    "crates/fs-decisions-bin",
+]
+
+[workspace.package]
+version = "0.0.1"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+authors = ["FreeSynergy <support@freesynergy.net>"]
+repository = "https://github.com/FreeSynergy/fs-decisions"
+# fs-rpc and fs-components need 1.89.
+rust-version = "1.89"

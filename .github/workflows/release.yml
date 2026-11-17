@@ -1,0 +1,25 @@
+# Release of FreeSynergy Decisions on a version tag (fs-release caller, pinned).
+name: release
+on:
+  push: { tags: ["v*"] }
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+  packages: write
+jobs:
+  release:
+    uses: FreeSynergy/fs-release/.github/workflows/release.yml@v0.0.10
+    with:
+      # `fs-decisions` holds the server (`fs-decisions serve`) and the starter; `fs-decisions-simple` is the frontend process.
+      binaries: fs-decisions,fs-decisions-simple
+      cargo-package: fs-decisions-bin
+      ignore-binaries: fs-decisions-server
+      name: fs-decisions
+      kind: app
+      app-id: net.freesynergy.Decisions
+      macos: false
+      windows-targets: ""   # Linux only for now: Unix sockets and Unix paths (Windows and macOS follow)
+    secrets:
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

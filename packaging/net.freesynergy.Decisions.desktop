@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=FreeSynergy.Decisions
+GenericName=Decisions
+Comment=Decide together: polls, proposals and finding a date
+Exec=fs-decisions
+Icon=net.freesynergy.Decisions
+Terminal=false
+Categories=Office;
