@@ -28,7 +28,7 @@ FreeSynergy is a family of programs that are free for everyone, forever, and tha
 
 ## For developers
 
-- Workspace crates: `fs-decisions-server` (the contract over a local socket), `fs-decisions-client` (the contract as a client), `fs-decisions-simple` (the frontend `simple`, a process of its own, depends only on the client and fs-components), `fs-decisions-bin` (the command `fs-decisions`: starter and `serve`). `fs-decisions-core` (the counting rule of the date poll; sorted in, not compiled yet).
+- Workspace crates: `fs-decisions-server` (the contract over a local socket), `fs-decisions-client` (the contract as a client), `fs-decisions-simple` (the frontend `simple`, a process of its own, depends only on the client and fs-components), `fs-decisions-bin` (the command `fs-decisions`: starter and `serve`). There is no core crate yet.
 - Engine and frontend are separate processes (ADR 0021, 0094 draft); the manifest of the frontend is `packaging/frontends/simple.metainfo.xml`.
 - The contract is `surveys.capnp` in [fs-interfaces](https://github.com/FreeSynergy/fs-interfaces) (draft); fs-forms serves the same contract. The capability key stays `surveys` (display name "Decisions", ADR 0068).
 - Build and test: `cargo build --workspace` and `cargo test --workspace`.
