@@ -19,8 +19,6 @@ path = "src/main.rs"
 [dependencies]
 # ONLY the client and fs-components (ADR 0094 draft, item 6): never -core and never -server (a test checks `cargo tree`).
 fs-decisions-client = { path = "../fs-decisions-client" }
-# TRANSITION (sorted in without a build; talk open): the preview sample still counts through the rule of the core. `tests/deps.rs` forbids this edge until the talk is settled.
-fs-decisions-core = { path = "../fs-decisions-core" }
 # One tag of fs-components for everything; Blinc comes only through it (`fs_components::blinc`), never as a dependency here.
 fs-components = { git = "https://github.com/FreeSynergy/fs-components", tag = "v0.0.25" }
 fs-components-app = { git = "https://github.com/FreeSynergy/fs-components", tag = "v0.0.25" }

@@ -1,5 +1,4 @@
 //! The counting rule of the date poll grid: how many said Yes, "If needed" and No in a window, and which window is suggested.
-//! Herkunft: fs-decisions@5cd8806:crates/fs-decisions-simple/src/grid.rs
 //!
 //! Pattern: Strategy (one pure function per rule) over plain value types; the rule is the decision of the project owner
 //! (17 Nov 2026): no weighting of "If needed", the three answers stay apart, the rule stands next to the suggestion.

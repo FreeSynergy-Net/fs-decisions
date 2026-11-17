@@ -2,16 +2,6 @@
 
 Version = tag; all crates of the workspace carry the same version.
 
-## Unreleased
-
-### English
-
-- **Sorted, not compiled (workflow `geruest-heben`, sort-in only).** The counting rule of the date poll (the answers Yes, If needed, No, the count per window, the suggested window; owner decision 2026-11-17) moved from the frontend `fs-decisions-simple` (`src/grid.rs`) into the new crate `fs-decisions-core` (`src/count.rs`), together with its rule tests (`tests/count.rs`); no logic changed. Rule FRONTEND-NUR-KOMPONENTEN: logic belongs to the program. Nothing was built or tested after the move; `Cargo.lock` was edited by hand. Known: the preview sample of the frontend still calls the rule through a transition dependency on the core, which `tests/deps.rs` forbids (open talk: the preview numbers should come from the server). Suggestion card and navigation list of the frontend are to become components (fs-components); not touched here.
-
-### Deutsch
-
-- **Sortiert, nicht kompiliert (Workflow `geruest-heben`, nur Einsortieren).** Die Zählregel der Terminumfrage (die Antworten Ja, Wenn nötig, Nein, die Zählung je Fenster, das vorgeschlagene Fenster; Entscheidung des Inhabers 2026-11-17) ist aus dem Frontend `fs-decisions-simple` (`src/grid.rs`) in das neue Crate `fs-decisions-core` (`src/count.rs`) gezogen, samt Regel-Tests (`tests/count.rs`); keine Logik geändert. Regel FRONTEND-NUR-KOMPONENTEN: Logik gehört ins Programm. Nach dem Verschieben wurde nichts gebaut oder getestet; `Cargo.lock` wurde von Hand angepasst. Bekannt: die Vorschau des Frontends ruft die Regel noch über eine Übergangs-Abhängigkeit vom Core auf, was `tests/deps.rs` verbietet (offenes Gespräch: die Vorschau-Zahlen sollen vom Server kommen). Vorschlagskarte und Navigationsliste des Frontends sollen Komponenten (fs-components) werden; hier nicht angefasst.
-
 ## 0.0.1
 
 The first version of this repository (it was empty before). The tag is set by the project owner; the release (signing) waits until the signing environment of this new repository is set up by the owner.

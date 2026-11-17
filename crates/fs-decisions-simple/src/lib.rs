@@ -13,6 +13,7 @@
 
 mod cli;
 mod content;
+mod grid;
 mod link;
 mod main_view;
 mod preview;
@@ -23,6 +24,7 @@ mod words;
 
 pub use cli::{Command, HELP, parse};
 pub use content::{blocks, coming, start};
+pub use grid::{Answer, Tally, best, tally};
 pub use link::Link;
 pub use main_view::{MainView, Mode, READ_ID, mode};
 pub use run::{EXIT_CONTRACT, run};

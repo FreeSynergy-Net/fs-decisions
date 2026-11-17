@@ -1,7 +1,6 @@
 [workspace]
 resolver = "2"
 members = [
-    "crates/fs-decisions-core",
     "crates/fs-decisions-server",
     "crates/fs-decisions-client",
     "crates/fs-decisions-simple",
